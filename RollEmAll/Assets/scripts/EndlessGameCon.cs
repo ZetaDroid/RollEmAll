@@ -15,7 +15,7 @@ public class EndlessGameCon : MonoBehaviour
     public int[] allRecordStar = new int[37];
     public int recordScore;
 
-
+    private bool isGameOver;
 
 
     void Start()
@@ -25,14 +25,18 @@ public class EndlessGameCon : MonoBehaviour
         recordScore = LevelscoreManager.LoadRecordScore();//& HERE
 
         bestScoreText.text = "Best : " + recordScore;
+        isGameOver = false;
     }
     
     void Update()
     {
         scoreText.text = "Score : " + score;
-        if (player.position.y < -3)
+        if(!isGameOver)
+        {
+            if (player.position.y < -3)
         {
             GameOver();
+        }
         }
     }
     public void AddScore()
@@ -41,6 +45,7 @@ public class EndlessGameCon : MonoBehaviour
     }
     void GameOver()
     {
+        isGameOver = true;
         uiAnim.SetTrigger("GameOver");
         Admanager.CheckForAd();
         if (score > recordScore)
